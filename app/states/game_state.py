@@ -298,7 +298,20 @@ class GameState(rx.State):
                 "success": success,
                 "score": attempt_score,
             }
-            self.attempts.insert(0, attempt)
+            if self.current_level_idx < 3:
+                existing_index = -1
+                for i, a in enumerate(self.attempts):
+                    if a["level"] == self.current_level_idx + 1:
+                        existing_index = i
+                        break
+                if existing_index != -1:
+                    if err_pct < self.attempts[existing_index]["error_pct"]:
+                        self.attempts.pop(existing_index)
+                        self.attempts.insert(0, attempt)
+                else:
+                    self.attempts.insert(0, attempt)
+            else:
+                self.attempts.insert(0, attempt)
             new_badges = []
             if success and err_pct < 1.0 and ("perfect" not in self.earned_badges):
                 self.earned_badges.append("perfect")
