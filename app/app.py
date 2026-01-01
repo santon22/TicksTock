@@ -11,7 +11,11 @@ def feature_card(icon: str, title: str, description: str) -> rx.Component:
         rx.icon(icon, class_name="w-8 h-8 text-indigo-400 mb-4"),
         rx.el.h3(title, class_name="text-lg font-bold text-white mb-2"),
         rx.el.p(description, class_name="text-slate-400 text-sm"),
-        class_name="bg-slate-900/50 p-6 rounded-2xl border border-slate-800/50 flex flex-col items-center text-center",
+        rx.el.div(
+            "COMING SOON",
+            class_name="mt-4 text-[10px] font-black text-indigo-500/80 tracking-[0.2em] border border-indigo-500/30 px-2 py-0.5 rounded-full bg-indigo-500/5",
+        ),
+        class_name="bg-slate-900/50 p-6 rounded-2xl border border-slate-800/50 flex flex-col items-center text-center group hover:border-indigo-500/30 transition-all duration-300",
     )
 
 
@@ -67,34 +71,48 @@ def index() -> rx.Component:
                     class_name="flex flex-col items-center text-center mb-16",
                 ),
                 rx.el.div(
-                    feature_card(
-                        "brain-circuit",
-                        "EEG Analysis",
-                        "Master your brain states for peak trading performance.",
+                    rx.el.h2(
+                        "The Future of Trading Mastery",
+                        class_name="text-sm font-black text-indigo-500 tracking-[0.3em] uppercase mb-8",
                     ),
-                    feature_card(
-                        "clock-4",
-                        "Internal Clock",
-                        "Sync your biological rhythm with market ticks.",
+                    rx.el.div(
+                        feature_card(
+                            "brain-circuit",
+                            "EEG Analysis",
+                            "Deep-dive analysis into your brainwave states during high-stakes sessions.",
+                        ),
+                        feature_card(
+                            "clock-4",
+                            "Internal Clock",
+                            "Master the ability to feel market frequency without looking at the chart.",
+                        ),
+                        feature_card(
+                            "trending-up",
+                            "Progress System",
+                            "Advanced calibration protocols designed to harden your mental edge.",
+                        ),
+                        feature_card(
+                            "award",
+                            "Elite Rank",
+                            "Join the world's most disciplined traders in a closed-loop ecosystem.",
+                        ),
+                        class_name="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl",
                     ),
-                    feature_card(
-                        "trending-up",
-                        "Progress System",
-                        "Track your calibration through 21 distinct levels.",
-                    ),
-                    feature_card(
-                        "award",
-                        "Elite Rank",
-                        "Earn badges and climb the ranks from Beginner to Grandmaster.",
-                    ),
-                    class_name="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl mb-24",
+                    class_name="w-full flex flex-col items-center mb-24",
                 ),
                 class_name="w-full flex flex-col items-center",
             ),
             rx.el.div(
-                rx.el.h2(
-                    "TicksTock Training Module",
-                    class_name="text-2xl font-bold text-slate-300 mb-8 tracking-wide",
+                rx.el.div(
+                    rx.el.h2(
+                        "Train While You Wait",
+                        class_name="text-3xl font-black text-white mb-2 tracking-tight",
+                    ),
+                    rx.el.p(
+                        "Sharpen your internal clock with our core calibration module.",
+                        class_name="text-slate-500 font-medium mb-12",
+                    ),
+                    class_name="text-center",
                 ),
                 rx.el.main(
                     rx.el.div(
