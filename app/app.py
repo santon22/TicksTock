@@ -65,7 +65,7 @@ def index() -> rx.Component:
                         style={"text-shadow": "0 0 20px rgba(52, 211, 153, 0.5)"},
                     ),
                     rx.el.p(
-                        "EEG Trading Analyzer & Internal Clock Mastery",
+                        "Real-time EEG analysis for emotion-driven trading decisions. Become the Indicator!",
                         class_name="text-slate-400 text-xl font-medium max-w-2xl",
                     ),
                     class_name="flex flex-col items-center text-center mb-16",
