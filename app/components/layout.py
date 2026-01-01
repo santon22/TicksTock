@@ -6,7 +6,7 @@ def layout(content: rx.Component) -> rx.Component:
     return rx.el.div(
         rx.el.div(
             content,
-            class_name="container mx-auto px-4 py-8 min-h-screen flex flex-col items-center justify-center relative z-10",
+            class_name="container mx-auto px-4 py-16 min-h-screen flex flex-col items-center relative z-10",
         ),
         rx.el.div(class_name="fixed inset-0 bg-slate-950 z-0"),
         rx.el.div(
