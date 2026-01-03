@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ["python3", "caddy", "parallel"]
+
+[phases.build]
+cmds = [
+  "pip install -r requirements.txt",
+  "reflex init",
+  "reflex export --frontend-only --no-zip"
+]
+
+[phases.start]
+cmd = "parallel --ungroup 'caddy run' 'reflex run --backend-only'"
