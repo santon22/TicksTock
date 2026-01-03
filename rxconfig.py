@@ -1,5 +1,5 @@
 import reflex as rx
 
 config = rx.Config(
-    app_name="tickstock",  # your app name
+    app_name="tickstock",  # Replace with your app module/folder name (e.g., containing pages/index.py)
 )
