@@ -1,6 +1,5 @@
 import reflex as rx
 import time
-import math
 from typing import TypedDict
 
 
@@ -97,8 +96,9 @@ class GameState(rx.State):
     @rx.var
     def current_target(self) -> float:
         """Returns the target time in seconds for the current level."""
-        if 0 <= self.current_level_idx < len(self.all_levels):
-            return self.all_levels[self.current_level_idx]
+        levels = self.all_levels
+        if 0 <= self.current_level_idx < len(levels):
+            return float(levels[self.current_level_idx])
         return 0.0
 
     @rx.var
@@ -128,7 +128,7 @@ class GameState(rx.State):
         """Returns the absolute error percentage."""
         if self.current_target == 0:
             return 0.0
-        return abs(self.time_diff / self.current_target) * 100.0
+        return float(abs(self.time_diff / self.current_target) * 100.0)
 
     @rx.var
     def is_success(self) -> bool:
@@ -146,31 +146,20 @@ class GameState(rx.State):
         t = self.current_target
         if t < 10:
             return "Easy"
-        if t < 30:
+        elif t < 30:
             return "Medium"
-        if t < 60:
+        elif t < 60:
             return "Hard"
         return "Expert"
-
-    @rx.var
-    def difficulty_color(self) -> str:
-        d = self.difficulty
-        if d == "Easy":
-            return "text-emerald-400"
-        if d == "Medium":
-            return "text-blue-400"
-        if d == "Hard":
-            return "text-amber-400"
-        return "text-rose-400"
 
     @rx.var
     def difficulty_badge_classes(self) -> str:
         d = self.difficulty
         if d == "Easy":
             return "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_15px_-3px_rgba(52,211,153,0.3)]"
-        if d == "Medium":
+        elif d == "Medium":
             return "bg-blue-500/10 text-blue-400 border border-blue-500/20 shadow-[0_0_15px_-3px_rgba(96,165,250,0.3)]"
-        if d == "Hard":
+        elif d == "Hard":
             return "bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_15px_-3px_rgba(251,191,36,0.3)]"
         return "bg-rose-500/10 text-rose-400 border border-rose-500/20 shadow-[0_0_15px_-3px_rgba(251,113,133,0.3)]"
 
@@ -182,8 +171,8 @@ class GameState(rx.State):
     def success_rate(self) -> float:
         if not self.attempts:
             return 0.0
-        wins = sum((1 for a in self.attempts if a["success"]))
-        return wins / len(self.attempts) * 100.0
+        successes = [a for a in self.attempts if a["success"]]
+        return float(len(successes) / len(self.attempts) * 100.0)
 
     @rx.var
     def formatted_success_rate(self) -> str:
@@ -193,8 +182,8 @@ class GameState(rx.State):
     def avg_error(self) -> float:
         if not self.attempts:
             return 0.0
-        total_err = sum((a["error_pct"] for a in self.attempts))
-        return total_err / len(self.attempts)
+        errors = [float(a["error_pct"]) for a in self.attempts]
+        return float(sum(errors) / len(self.attempts))
 
     @rx.var
     def formatted_avg_error(self) -> str:
@@ -208,26 +197,13 @@ class GameState(rx.State):
     def current_rank(self) -> str:
         if self.max_unlocked_idx >= 20:
             return "Grandmaster"
-        if self.max_unlocked_idx >= 15:
+        elif self.max_unlocked_idx >= 15:
             return "Master"
-        if self.max_unlocked_idx >= 10:
+        elif self.max_unlocked_idx >= 10:
             return "Expert"
-        if self.max_unlocked_idx >= 5:
+        elif self.max_unlocked_idx >= 5:
             return "Apprentice"
         return "Beginner"
-
-    @rx.var
-    def rank_icon(self) -> str:
-        r = self.current_rank
-        if r == "Grandmaster":
-            return "crown"
-        if r == "Master":
-            return "medal"
-        if r == "Expert":
-            return "star"
-        if r == "Apprentice":
-            return "award"
-        return "user"
 
     @rx.var
     def badges_list(self) -> list[Badge]:
@@ -260,15 +236,10 @@ class GameState(rx.State):
             self.last_elapsed = end_time - self.start_timestamp
             self.is_running = False
             self.show_result = True
-            diff = self.last_elapsed - self.current_target
-            err_pct = 0.0
-            if self.current_target > 0:
-                err_pct = abs(diff / self.current_target) * 100.0
-            success = False
-            if self.current_level_idx < 3:
-                success = True
-            else:
-                success = err_pct <= 10.0
+            target = self.all_levels[self.current_level_idx]
+            diff = self.last_elapsed - target
+            err_pct = abs(diff / target) * 100.0 if target > 0 else 0.0
+            success = True if self.current_level_idx < 3 else err_pct <= 10.0
             attempt_score = 0
             if success:
                 base_points = 1000
@@ -283,7 +254,7 @@ class GameState(rx.State):
                     self.best_streak = self.current_streak
                 if (
                     self.current_level_idx == self.max_unlocked_idx
-                    and self.max_unlocked_idx < self.total_levels - 1
+                    and self.max_unlocked_idx < len(self.all_levels) - 1
                 ):
                     self.max_unlocked_idx += 1
             else:
@@ -291,7 +262,7 @@ class GameState(rx.State):
                 self.combo_multiplier = 1
             attempt: Attempt = {
                 "level": self.current_level_idx + 1,
-                "target": self.current_target,
+                "target": target,
                 "elapsed": self.last_elapsed,
                 "diff": diff,
                 "error_pct": err_pct,
@@ -329,19 +300,13 @@ class GameState(rx.State):
                 self.earned_badges.append("legendary")
                 new_badges.append("Legendary")
             for b in new_badges:
-                yield rx.toast(
-                    f"Badge Unlocked: {b}!", duration=3000, position="top-center"
-                )
+                yield rx.toast(f"Badge Unlocked: {b}!", duration=3000)
             if success:
                 yield rx.call_script("playSuccess()")
-                if err_pct < 5.0:
-                    yield rx.call_script(
-                        "confetti({particleCount: 150, spread: 70, origin: { y: 0.6 }})"
-                    )
-                else:
-                    yield rx.call_script(
-                        "confetti({particleCount: 50, spread: 50, origin: { y: 0.6 }})"
-                    )
+                particle_count = 150 if err_pct < 5.0 else 50
+                yield rx.call_script(
+                    f"confetti({{particleCount: {particle_count}, spread: 70, origin: {{ y: 0.6 }} }})"
+                )
             else:
                 yield rx.call_script("playFailure()")
 
@@ -349,13 +314,13 @@ class GameState(rx.State):
     def next_level(self):
         """Advances to the next level."""
         if (
-            self.current_level_idx < self.total_levels - 1
+            self.current_level_idx < len(self.all_levels) - 1
             and self.current_level_idx < self.max_unlocked_idx
         ):
             self.current_level_idx += 1
             self.show_result = False
             self.last_elapsed = 0.0
-        rx.call_script("playClick()")
+        return rx.call_script("playClick()")
 
     @rx.event
     def prev_level(self):
@@ -364,11 +329,11 @@ class GameState(rx.State):
             self.current_level_idx -= 1
             self.show_result = False
             self.last_elapsed = 0.0
-        rx.call_script("playClick()")
+        return rx.call_script("playClick()")
 
     @rx.event
     def retry_level(self):
         """Resets the current level state for a retry."""
         self.show_result = False
         self.last_elapsed = 0.0
-        rx.call_script("playClick()")
+        return rx.call_script("playClick()")
