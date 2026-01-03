@@ -1,6 +1,3 @@
 import reflex as rx
 
-config = rx.Config(
-    app_name="TicksTock",  # Replace with your app's module name, e.g., the folder containing your pages/index.py
-    telemetry_enabled=False,
-)
+config = rx.Config(app_name="app", plugins=[rx.plugins.TailwindV3Plugin()])
