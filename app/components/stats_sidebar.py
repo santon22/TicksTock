@@ -132,11 +132,5 @@ def stats_sidebar() -> rx.Component:
             class_name="w-full mb-6",
         ),
         history_list(),
-        rx.el.button(
-            rx.icon("download", class_name="w-4 h-4 mr-2"),
-            "Export History (CSV)",
-            on_click=GameState.export_data,
-            class_name="mt-4 flex items-center justify-center w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-sm font-semibold transition-all border border-slate-700 active:scale-[0.98]",
-        ),
         class_name="w-full flex flex-col",
     )

@@ -372,21 +372,3 @@ class GameState(rx.State):
         self.show_result = False
         self.last_elapsed = 0.0
         rx.call_script("playClick()")
-
-    @rx.event
-    def export_data(self):
-        """Exports the attempts history as a CSV file."""
-        if not self.attempts:
-            return rx.toast("No data to export.", duration=3000)
-        header = """Level,Target(s),Elapsed(s),Diff(s),Error(%),Success
-"""
-        rows = []
-        for a in self.attempts:
-            row = f"{a['level']},{a['target']},{a['elapsed']:.3f},{a['diff']:.3f},{a['error_pct']:.2f},{a['success']}"
-            rows.append(row)
-        csv_content = (
-            header
-            + """
-""".join(rows)
-        )
-        return rx.download(data=csv_content, filename="ticks_tock_history.csv")
