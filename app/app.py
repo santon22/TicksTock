@@ -11,10 +11,6 @@ def feature_card(icon: str, title: str, description: str) -> rx.Component:
         rx.icon(icon, class_name="w-8 h-8 text-[#556B2F] mb-4"),
         rx.el.h3(title, class_name="text-lg font-bold text-white mb-2"),
         rx.el.p(description, class_name="text-slate-400 text-sm"),
-        rx.el.div(
-            "COMING SOON",
-            class_name="mt-4 text-[10px] font-black text-[#556B2F]/80 tracking-[0.2em] border border-[#556B2F]/30 px-2 py-0.5 rounded-full bg-[#556B2F]/5",
-        ),
         class_name="bg-slate-900/50 p-6 rounded-2xl border border-slate-800/50 flex flex-col items-center text-center group hover:border-[#556B2F]/30 transition-all duration-300",
     )
 
@@ -57,18 +53,18 @@ def index() -> rx.Component:
                 rx.el.div(
                     rx.el.h1(
                         "HypnoTicks",
-                        class_name="text-8xl font-black text-[#556B2F] mb-12 tracking-tighter",
+                        class_name="text-8xl font-black text-[#556B2F] mb-8 tracking-tighter",
                     ),
                     rx.el.p(
                         "Real-time EEG analysis for emotion-driven trading decisions. Become the Indicator!",
-                        class_name="text-slate-400 text-xl font-medium max-w-2xl mb-12",
+                        class_name="text-slate-400 text-xl font-medium max-w-2xl mb-8",
                     ),
                     rx.el.div(
                         "COMING SOON",
-                        class_name="text-3xl sm:text-5xl font-black text-emerald-400 mb-12 animate-pulse tracking-widest",
+                        class_name="text-3xl sm:text-5xl font-black text-emerald-400 mb-8 animate-pulse tracking-widest",
                         style={"text-shadow": "0 0 20px rgba(52, 211, 153, 0.5)"},
                     ),
-                    class_name="flex flex-col items-center text-center mb-16",
+                    class_name="flex flex-col items-center text-center mb-8",
                 ),
                 rx.el.div(
                     rx.el.h2(
