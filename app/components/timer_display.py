@@ -16,7 +16,7 @@ def timer_display() -> rx.Component:
                     GameState.is_running,
                     rx.el.span(
                         "Tracking internal clock...",
-                        class_name="text-indigo-400 font-medium tracking-wider text-sm uppercase animate-pulse",
+                        class_name="text-[#556B2F] font-medium tracking-wider text-sm uppercase animate-pulse",
                     ),
                     rx.cond(
                         GameState.show_result,
@@ -37,13 +37,13 @@ def timer_display() -> rx.Component:
                     GameState.is_running,
                     rx.el.div(
                         rx.el.div(
-                            class_name="w-4 h-4 bg-indigo-500 rounded-full animate-bounce"
+                            class_name="w-4 h-4 bg-[#556B2F] rounded-full animate-bounce"
                         ),
                         rx.el.div(
-                            class_name="w-4 h-4 bg-indigo-500 rounded-full animate-bounce delay-100"
+                            class_name="w-4 h-4 bg-[#556B2F] rounded-full animate-bounce delay-100"
                         ),
                         rx.el.div(
-                            class_name="w-4 h-4 bg-indigo-500 rounded-full animate-bounce delay-200"
+                            class_name="w-4 h-4 bg-[#556B2F] rounded-full animate-bounce delay-200"
                         ),
                         class_name="flex gap-3 items-center justify-center h-24",
                     ),
@@ -101,14 +101,14 @@ def timer_display() -> rx.Component:
             ),
             class_name=rx.cond(
                 GameState.is_running,
-                "relative w-72 h-72 sm:w-96 sm:h-96 rounded-full border-4 border-indigo-500/30 bg-slate-900/50 backdrop-blur-sm shadow-[0_0_50px_-12px_rgba(99,102,241,0.25)] flex items-center justify-center transition-all duration-500 animate-pulse",
+                "relative w-72 h-72 sm:w-96 sm:h-96 rounded-full border-4 border-[#556B2F]/30 bg-slate-900/50 backdrop-blur-sm shadow-[0_0_50px_-12px_rgba(85,107,47,0.25)] flex items-center justify-center transition-all duration-500 animate-pulse",
                 rx.cond(
                     GameState.show_result & GameState.is_success,
                     "relative w-72 h-72 sm:w-96 sm:h-96 rounded-full border-4 border-emerald-400 bg-slate-900/50 backdrop-blur-sm shadow-[0_0_100px_-10px_rgba(52,211,153,0.5)] flex items-center justify-center transition-all duration-500 ring-2 ring-emerald-500/20",
                     rx.cond(
                         GameState.show_result & ~GameState.is_success,
                         "relative w-72 h-72 sm:w-96 sm:h-96 rounded-full border-4 border-rose-500 bg-slate-900/50 backdrop-blur-sm shadow-[0_0_100px_-10px_rgba(244,63,94,0.5)] flex items-center justify-center transition-all duration-500 ring-2 ring-rose-500/20 animate-[shake_0.5s_ease-in-out]",
-                        "relative w-72 h-72 sm:w-96 sm:h-96 rounded-full border-4 border-slate-700/30 bg-slate-900/50 backdrop-blur-sm shadow-xl flex items-center justify-center transition-all duration-500 hover:border-indigo-500/30 hover:shadow-indigo-500/10",
+                        "relative w-72 h-72 sm:w-96 sm:h-96 rounded-full border-4 border-slate-700/30 bg-slate-900/50 backdrop-blur-sm shadow-xl flex items-center justify-center transition-all duration-500 hover:border-[#556B2F]/30 hover:shadow-[#556B2F]/10",
                     ),
                 ),
             ),

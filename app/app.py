@@ -8,14 +8,14 @@ from app.states.game_state import GameState
 
 def feature_card(icon: str, title: str, description: str) -> rx.Component:
     return rx.el.div(
-        rx.icon(icon, class_name="w-8 h-8 text-indigo-400 mb-4"),
+        rx.icon(icon, class_name="w-8 h-8 text-[#556B2F] mb-4"),
         rx.el.h3(title, class_name="text-lg font-bold text-white mb-2"),
         rx.el.p(description, class_name="text-slate-400 text-sm"),
         rx.el.div(
             "COMING SOON",
-            class_name="mt-4 text-[10px] font-black text-indigo-500/80 tracking-[0.2em] border border-indigo-500/30 px-2 py-0.5 rounded-full bg-indigo-500/5",
+            class_name="mt-4 text-[10px] font-black text-[#556B2F]/80 tracking-[0.2em] border border-[#556B2F]/30 px-2 py-0.5 rounded-full bg-[#556B2F]/5",
         ),
-        class_name="bg-slate-900/50 p-6 rounded-2xl border border-slate-800/50 flex flex-col items-center text-center group hover:border-indigo-500/30 transition-all duration-300",
+        class_name="bg-slate-900/50 p-6 rounded-2xl border border-slate-800/50 flex flex-col items-center text-center group hover:border-[#556B2F]/30 transition-all duration-300",
     )
 
 
@@ -57,7 +57,7 @@ def index() -> rx.Component:
                 rx.el.div(
                     rx.el.h1(
                         "HypnoTicks",
-                        class_name="text-5xl font-black text-indigo-400 mb-4 tracking-tighter",
+                        class_name="text-5xl font-black text-[#556B2F] mb-4 tracking-tighter",
                     ),
                     rx.el.div(
                         "COMING SOON",
@@ -73,7 +73,7 @@ def index() -> rx.Component:
                 rx.el.div(
                     rx.el.h2(
                         "The Future of Trading Mastery",
-                        class_name="text-sm font-black text-indigo-500 tracking-[0.3em] uppercase mb-8",
+                        class_name="text-sm font-black text-[#556B2F] tracking-[0.3em] uppercase mb-8",
                     ),
                     rx.el.div(
                         feature_card(
@@ -132,7 +132,7 @@ def index() -> rx.Component:
                 rx.el.div(
                     rx.el.h3(
                         "How to Play",
-                        class_name="text-indigo-400 font-bold uppercase tracking-wider text-sm mb-6 text-center",
+                        class_name="text-[#556B2F] font-bold uppercase tracking-wider text-sm mb-6 text-center",
                     ),
                     rx.el.div(
                         rx.el.div(

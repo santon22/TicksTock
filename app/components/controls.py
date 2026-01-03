@@ -23,7 +23,7 @@ def controls() -> rx.Component:
                     rx.el.button(
                         "START TIMER",
                         on_click=GameState.start_timer,
-                        class_name="w-64 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold tracking-widest shadow-lg shadow-indigo-900/20 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 border border-indigo-400/20",
+                        class_name="w-64 py-4 rounded-xl bg-[#556B2F] hover:bg-[#6B8E23] text-white font-bold tracking-widest shadow-lg shadow-[#556B2F]/20 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 border border-[#556B2F]/20",
                     ),
                 ),
             ),

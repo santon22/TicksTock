@@ -45,7 +45,7 @@ def progress_bar() -> rx.Component:
             rx.el.div(
                 rx.el.span(
                     rx.el.span(
-                        GameState.max_unlocked_idx + 1, class_name="text-indigo-400"
+                        GameState.max_unlocked_idx + 1, class_name="text-[#556B2F]"
                     ),
                     f" / {GameState.total_levels}",
                     class_name="text-slate-600",
@@ -56,7 +56,7 @@ def progress_bar() -> rx.Component:
         ),
         rx.el.div(
             rx.el.div(
-                class_name="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-500",
+                class_name="h-full bg-gradient-to-r from-[#556B2F] to-[#6B8E23] rounded-full transition-all duration-500",
                 style={"width": f"{GameState.progress_percent}%"},
             ),
             class_name="h-2 w-full bg-slate-800 rounded-full overflow-hidden",
@@ -69,7 +69,7 @@ def stats_sidebar() -> rx.Component:
     return rx.el.div(
         progress_bar(),
         rx.el.div(
-            stat_card("Rank", GameState.current_rank, color="text-indigo-400"),
+            stat_card("Rank", GameState.current_rank, color="text-[#556B2F]"),
             stat_card(
                 "Total Score", GameState.score.to_string(), color="text-amber-400"
             ),
