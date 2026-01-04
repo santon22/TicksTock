@@ -53,18 +53,18 @@ def index() -> rx.Component:
                 rx.el.div(
                     rx.el.h1(
                         "HypnoTicks",
-                        class_name="text-8xl font-black text-[#556B2F] mb-8 tracking-tighter",
+                        class_name="text-5xl sm:text-6xl md:text-8xl font-black text-[#556B2F] mb-8 tracking-tighter",
                     ),
                     rx.el.p(
                         "Real-time EEG analysis for emotion-driven trading decisions. Become the Indicator!",
-                        class_name="text-slate-400 text-xl font-medium max-w-2xl mb-8",
+                        class_name="text-base sm:text-lg md:text-xl text-slate-400 font-medium max-w-2xl px-4 sm:px-0 mb-8",
                     ),
                     rx.el.div(
                         "COMING SOON",
-                        class_name="text-3xl sm:text-5xl font-black text-emerald-400 mb-8 animate-pulse tracking-widest",
+                        class_name="text-2xl sm:text-4xl md:text-5xl font-black text-emerald-400 mb-8 animate-pulse tracking-widest",
                         style={"text-shadow": "0 0 20px rgba(52, 211, 153, 0.5)"},
                     ),
-                    class_name="flex flex-col items-center text-center mb-8",
+                    class_name="flex flex-col items-center text-center mb-8 px-4",
                 ),
                 rx.el.div(
                     rx.el.h2(
