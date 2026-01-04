@@ -1,6 +1,6 @@
 {
     # Disable automatic HTTPS — Railway handles TLS termination for *.up.railway.app domains
-    auto_https off
+    auto_https on
 }
 
 {$RAILWAY_PUBLIC_DOMAIN:localhost:3000}
