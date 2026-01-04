@@ -1,3 +1,8 @@
+{
+    # Disable automatic HTTPS — Railway handles TLS termination for *.up.railway.app domains
+    auto_https off
+}
+
 {$RAILWAY_PUBLIC_DOMAIN:localhost:3000}
 
 encode gzip
@@ -9,7 +14,7 @@ file_server
 reverse_proxy /backend/* localhost:8000
 reverse_proxy localhost:8000
 
-# SPA fallback: Rewrite non-file requests to index.html for client-side routing
+# SPA fallback for client-side routing (fixes refresh/deep link 404s)
 @spa {
     not path /backend/* /_static/*
     not file
