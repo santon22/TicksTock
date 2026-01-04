@@ -1,16 +1,13 @@
 import reflex as rx
 import os
 
-railway_domain = "RAILWAY_PUBLIC_DOMAIN"
-
-class ReflextemplateConfig(rx.Config):
-    pass
-
-config = ReflextemplateConfig(
-    app_name="myapp",
+config = rx.Config(
+    app_name="myapp",  # Replace with your actual folder name, e.g., "TicksTock" if your app code is in TicksTock/TicksTock.py
     telemetry_enabled=False,
-    frontend_port=3000, # default frontend port
-    backend_port=8000, # default backend port
-    # use https and the railway public domain with a backend route if available, otherwise default to a local address
-    api_url=f'https://{os.environ[railway_domain]}/backend' if railway_domain in os.environ else "http://127.0.0.1:8000"
+    plugins=[
+        rx.plugins.sitemap.SitemapPlugin(),  # Explicitly add to silence the warning (recommended for SEO)
+    ],
+    # No need to set frontend_port or backend_port — Brody's template with Caddy handles this automatically
+    # api_url is only needed during frontend compile if separated; in Brody's single-process setup on Railway, leave default (empty) so it uses relative paths (works perfectly behind Caddy proxy)
+    # Do NOT set api_url here — it would force absolute URLs and break websocket connections on Railway
 )
