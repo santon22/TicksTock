@@ -1,29 +1,48 @@
-FROM python:3.11-slim
+# This Dockerfile deploys a single-container Reflex app on platforms like Railway.
+# It serves static frontend via Caddy and proxies backend requests.
 
-# Install Node.js (for frontend build) and Caddy
-RUN apt-get update && apt-get install -y curl gnupg && \
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs && \
-    apt-get install -y debian-keyring debian-archive-keyring apt-transport-https && \
-    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg && \
-    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list && \
-    apt-get update && apt-get install -y caddy && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+FROM python:3.12-slim
+
+# Port (Railway uses $PORT, default to 8080 if not set)
+ARG PORT=8080
+ENV PORT=$PORT
+
+# Install system dependencies: Caddy, unzip (required for Bun), and parallel (optional but useful)
+RUN apt-get update && apt-get install -y \
+    caddy \
+    unzip \
+    parallel \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy requirements and install
+# Copy requirements and install Python deps
 COPY requirements.txt .
-RUN pip install -r requirements.txt reflex
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy code
+# Copy app code
 COPY . .
 
-# Export frontend
-RUN reflex export --frontend-only && mv .web/_static /srv && rm -rf .web
+# Initialize Reflex and export frontend static files
+RUN reflex init
+RUN reflex export --frontend-only --no-zip && \
+    mv .web/_static/* /srv/ && \
+    rm -rf .web
 
-# Expose port (Railway uses $PORT)
+# Create Caddyfile for reverse proxy
+RUN echo ':${PORT}\n\
+encode gzip\n\
+@backend_routes path /_event/* /ping /_upload /_upload/*\n\
+handle @backend_routes {\n\
+  reverse_proxy localhost:8000\n\
+}\n\
+root * /srv\n\
+file_server' > /etc/caddy/Caddyfile
+
+# Expose port
 EXPOSE $PORT
 
-# Start Caddy + Reflex backend
-CMD caddy start --config /app/Caddyfile & reflex run --env prod --backend-only
+# Start both backend and Caddy using parallel
+CMD ["parallel", "--ungroup", "--halt", "now,fail=1", ":::", \
+     "reflex run --env prod --backend-only", \
+     "caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"]
