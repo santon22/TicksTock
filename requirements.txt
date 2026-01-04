@@ -1,10 +1,2 @@
-pandas
-reflex
-numpy
-pillow
-httpx
-stripe
-matplotlib
-supabase
-pyautogui
-scipy
+
+reflex==0.8.24.post1
