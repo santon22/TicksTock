@@ -214,6 +214,7 @@ def index() -> rx.Component:
 app = rx.App(
     theme=rx.theme(appearance="light"),
     head_components=[
+        rx.el.link(rel="icon", href="/eeg_icon.ico.ico"),
         rx.el.link(
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap",
             rel="stylesheet",
