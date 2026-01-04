@@ -4,19 +4,14 @@
     persist_config off
 }
 
-# Health check endpoint for Railway
-respond /health 200
-
 encode gzip
 
-root * /app/.web
+root * /app/.web/_static
 
 file_server
 
 reverse_proxy /backend/* localhost:8000
 reverse_proxy localhost:8000
 
-# SPA fallback: fixes fileserver.notFound and refresh/deep link 404s
-handle_path /* {
-    try_files {path} {path}/ /index.html
-}
+# SPA fallback for client-side routing
+try_files {path} {path}/ /index.html
