@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 
-# Install Node.js (needed for frontend build) and Caddy
-RUN apt-get update && apt-get install -y curl gnupg && \
+# Install Node.js (needed for frontend build), unzip (required for Bun install), curl, and Caddy
+RUN apt-get update && apt-get install -y curl gnupg unzip && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs && \
     apt-get install -y debian-keyring debian-archive-keyring apt-transport-https && \
