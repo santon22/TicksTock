@@ -1,2 +1,10 @@
-
-reflex==0.8.20
+pandas
+reflex
+numpy
+pillow
+httpx
+stripe
+matplotlib
+supabase
+pyautogui
+scipy
