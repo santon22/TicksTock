@@ -5,24 +5,18 @@
 }
 
 # Health check endpoint for Railway
-respond /health 200 {
-    close
-}
+respond /health 200
 
 encode gzip
 
 root * /app/.web
 
-# Serve static files first
 file_server
 
-# Proxy backend API and websockets
 reverse_proxy /backend/* localhost:8000
-
-# Proxy root backend for Reflex event stream (needed for stateful connections)
 reverse_proxy localhost:8000
 
-# SPA fallback: Critical fix for fileserver.notFound errors and root/refresh 404s
+# SPA fallback: fixes fileserver.notFound and refresh/deep link 404s
 handle_path /* {
     try_files {path} {path}/ /index.html
 }
