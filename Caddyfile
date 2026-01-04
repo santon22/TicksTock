@@ -1,14 +1,14 @@
 {
-	auto_https on
-	admin on
+	auto_https off
+	admin off
 }
 
 encode gzip
 
 root * /app/.web/build/client
 
-file_server
-try_files {path} {path}/ /index.html
-
 reverse_proxy /backend/* localhost:8000
-reverse_proxy localhost:8000
+
+file_server
+
+try_files {path} {path}/ /index.html
