@@ -4,7 +4,7 @@ import os
 railway_domain = "RAILWAY_PUBLIC_DOMAIN"
 
 config = rx.Config(
-    app_name="Ticks Tock",
+    app_name="Ticks_Tock",
     telemetry_enabled=False,
     frontend_port=3000,
     backend_port=8000,
