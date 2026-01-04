@@ -1,6 +1,0 @@
-[build]
-builder = "nixpacks"  # Forces the old Nixpacks builder, which supports your existing setup
-
-# Optional: If you want to stay on the new Railpack (recommended long-term), use this instead:
-# But note: You would need to update the phases and start command to Railpack-compatible format.
-# For now, forcing Nixpacks is the simplest way to get it working immediately.
