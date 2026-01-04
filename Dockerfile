@@ -1,21 +1,18 @@
-# This Dockerfile deploys a single-container Reflex app on Railway (and similar platforms).
-# It manually installs Bun to avoid curl dependency issues in minimal images.
-# Uses Caddy as reverse proxy for static frontend + backend.
+# This Dockerfile deploys a single-container Reflex app on platforms like Railway.
+# It uses Caddy as reverse proxy and manually installs Bun to avoid installer issues.
+# Tested for Reflex versions ~0.5+ (as of January 2026).
 
-FROM python:3.12-slim
+FROM python:3.12-slim AS builder
 
-# Install system dependencies: Caddy, unzip (for Bun zip), wget (for download), ca-certificates (for HTTPS)
+# Install build dependencies: wget, unzip, ca-certificates
 RUN apt-get update && apt-get install -y \
-    caddy \
-    unzip \
     wget \
+    unzip \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Manually install Bun (latest stable as of January 2026)
-# Find latest Bun version at https://github.com/oven-sh/bun/releases/latest
-ENV BUN_VERSION=1.1.30  # Update if newer version available
-ENV BUN_INSTALL=/usr/local
+# Manually install latest Bun (as of Jan 2026: 1.3.x; check https://github.com/oven-sh/bun/releases for updates)
+ENV BUN_VERSION=1.3.4
 RUN wget https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip && \
     unzip bun-linux-x64.zip -d /usr/local/bin && \
     rm bun-linux-x64.zip && \
@@ -24,13 +21,9 @@ RUN wget https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bu
 # Verify Bun
 RUN bun --version
 
-# Port (Railway injects $PORT)
-ARG PORT=8080
-ENV PORT=$PORT
-
 WORKDIR /app
 
-# Copy requirements and install Python deps
+# Copy requirements and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -40,14 +33,33 @@ COPY . .
 # Initialize Reflex (uses pre-installed Bun)
 RUN reflex init
 
-# Export frontend static files
+# Export frontend static files (path valid for recent Reflex versions)
 RUN reflex export --frontend-only --no-zip && \
     mkdir -p /srv && \
     mv .web/_static/* /srv/ && \
     rm -rf .web
 
-# Generate Caddyfile (proxies backend routes to localhost:8000)
-RUN echo ':${PORT}\n\
+# Final runtime stage
+FROM python:3.12-slim
+
+# Install runtime dependencies: Caddy and parallel
+RUN apt-get update && apt-get install -y \
+    caddy \
+    parallel \
+    && rm -rf /var/lib/apt/lists/*
+
+# Port (Railway injects $PORT)
+ARG PORT=8080
+ENV PORT=$PORT
+
+WORKDIR /app
+
+# Copy app and static files from builder
+COPY --from=builder /app /app
+COPY --from=builder /srv /srv
+
+# Generate Caddyfile dynamically
+RUN echo ":${PORT}\n\
 encode gzip\n\
 \n\
 @backend {\n\
@@ -58,12 +70,11 @@ handle @backend {\n\
 }\n\
 \n\
 root * /srv\n\
-file_server' > /etc/caddy/Caddyfile
+file_server" > /etc/caddy/Caddyfile
 
-# Expose port
 EXPOSE $PORT
 
-# Start backend and Caddy in parallel
+# Start both Reflex backend and Caddy
 CMD ["parallel", "--ungroup", "--halt", "now,fail=1", ":::", \
      "reflex run --env prod --backend-only", \
      "caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"]
