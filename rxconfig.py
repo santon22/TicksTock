@@ -2,7 +2,7 @@ import reflex as rx
 import os
 
 config = rx.Config(
-    app_name="TicksTock",  # Replace with your actual folder name, e.g., "TicksTock" if your app code is in TicksTock/TicksTock.py
+    app_name="app.py",  # Replace with your actual folder name, e.g., "TicksTock" if your app code is in TicksTock/TicksTock.py
     telemetry_enabled=False,
     plugins=[
         rx.plugins.sitemap.SitemapPlugin(),  # Explicitly add to silence the warning (recommended for SEO)
