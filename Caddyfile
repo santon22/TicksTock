@@ -1,16 +1,10 @@
 {
-    auto_https off
-    admin off
+auto_https off
+admin off
 }
-
 encode gzip
-
-root * /app/.web
-
-# Serve index.html for root and SPA fallback (Reflex places index.html directly in .web)
-try_files {path} {path}/ /index.html
-
+root * /app/.web/build/client
 file_server
-
 reverse_proxy /backend/* localhost:8000
 reverse_proxy localhost:8000
+try_files {path} {path}/ /index.html
