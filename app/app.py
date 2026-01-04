@@ -175,7 +175,7 @@ def index() -> rx.Component:
                     ),
                     rx.el.div(
                         social_link(
-                            "https://youtube.com/@Mr.Wicks22",
+                            "https://youtube.com/@HypnoTicks",
                             "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
                             "Youtube",
                         ),
