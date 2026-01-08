@@ -259,4 +259,4 @@ app = rx.App(
             """),
     ],
 )
-app.add_page(index, route="/", title="HypnoTickS")
+app.add_page(index, route="/", title="HypnoTicks")
