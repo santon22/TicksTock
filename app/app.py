@@ -53,7 +53,7 @@ def index() -> rx.Component:
                 rx.el.a(
                     rx.image(src="/HypnoTicks.png", class_name="h-36 w-auto"), href="/"
                 ),
-                class_name="w-full flex justify-start items-center mb-12",
+                class_name="w-full flex justify-center items-center mb-12",
             ),
             rx.el.section(
                 rx.el.div(
