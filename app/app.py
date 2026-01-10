@@ -51,7 +51,7 @@ def index() -> rx.Component:
         rx.el.div(
             rx.el.nav(
                 rx.el.a(
-                    rx.image(src="/HypnoTicks.png", class_name="h-12 w-auto"), href="/"
+                    rx.image(src="/HypnoTicks.png", class_name="h-36 w-auto"), href="/"
                 ),
                 class_name="w-full flex justify-start items-center mb-12",
             ),
