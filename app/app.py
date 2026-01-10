@@ -49,6 +49,12 @@ def discord_link() -> rx.Component:
 def index() -> rx.Component:
     return layout(
         rx.el.div(
+            rx.el.nav(
+                rx.el.a(
+                    rx.image(src="/HypnoTicks.png", class_name="h-12 w-auto"), href="/"
+                ),
+                class_name="w-full flex justify-start items-center mb-12",
+            ),
             rx.el.section(
                 rx.el.div(
                     rx.el.h1(
@@ -169,6 +175,7 @@ def index() -> rx.Component:
                     class_name="w-full",
                 ),
                 rx.el.div(
+                    rx.image(src="/HypnoTicks.png", class_name="h-16 w-auto mb-8"),
                     rx.el.p(
                         "Join the community & stay connected",
                         class_name="text-slate-400 text-lg mb-8 font-medium",
