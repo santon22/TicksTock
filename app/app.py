@@ -84,6 +84,13 @@ def index() -> rx.Component:
                     class_name="w-full flex justify-between items-center px-8 mb-24",
                 ),
                 rx.el.div(
+                    rx.image(
+                        src="/EEGHAT.png",
+                        class_name="h-64 w-auto block lg:hidden opacity-80 mb-12",
+                    ),
+                    class_name="w-full flex justify-center",
+                ),
+                rx.el.div(
                     rx.el.h2(
                         "The Future of Trading Mastery",
                         class_name="text-sm font-black text-[#556B2F] tracking-[0.3em] uppercase mb-8",
