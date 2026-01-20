@@ -57,31 +57,31 @@ def index() -> rx.Component:
             ),
             rx.el.section(
                 rx.el.div(
-                    rx.el.h1(
-                        "HypnoTicks",
-                        class_name="text-5xl sm:text-6xl md:text-8xl font-black text-[#556B2F] mb-8 tracking-tighter",
-                    ),
-                    rx.el.p(
-                        "Real-time EEG analysis for emotion-driven trading decisions. Become the Indicator!",
-                        class_name="text-base sm:text-lg md:text-xl text-slate-400 font-medium max-w-2xl px-4 sm:px-0 mb-8",
-                    ),
-                    rx.el.div(
-                        "COMING SOON",
-                        class_name="text-2xl sm:text-4xl md:text-5xl font-black text-emerald-400 mb-8 animate-pulse tracking-widest",
-                        style={"text-shadow": "0 0 20px rgba(52, 211, 153, 0.5)"},
-                    ),
-                    class_name="flex flex-col items-center text-center mb-8 px-4",
-                ),
-                rx.el.div(
                     rx.image(
                         src="/EEGHAT.png",
                         class_name="h-72 w-auto hidden lg:block opacity-50 hover:opacity-100 transition-opacity duration-500",
+                    ),
+                    rx.el.div(
+                        rx.el.h1(
+                            "HypnoTicks",
+                            class_name="text-5xl sm:text-6xl md:text-8xl font-black text-[#556B2F] mb-8 tracking-tighter",
+                        ),
+                        rx.el.p(
+                            "Real-time EEG analysis for emotion-driven trading decisions. Become the Indicator!",
+                            class_name="text-base sm:text-lg md:text-xl text-slate-400 font-medium max-w-2xl px-4 sm:px-0 mb-8",
+                        ),
+                        rx.el.div(
+                            "COMING SOON",
+                            class_name="text-2xl sm:text-4xl md:text-5xl font-black text-emerald-400 mb-8 animate-pulse tracking-widest",
+                            style={"text-shadow": "0 0 20px rgba(52, 211, 153, 0.5)"},
+                        ),
+                        class_name="flex flex-col items-center text-center px-4 flex-1",
                     ),
                     rx.image(
                         src="/EEGHAT.png",
                         class_name="h-72 w-auto hidden lg:block opacity-50 hover:opacity-100 transition-opacity duration-500 scale-x-[-1]",
                     ),
-                    class_name="w-full flex justify-between items-center px-8 mb-16",
+                    class_name="w-full flex justify-between items-center px-8 mb-24",
                 ),
                 rx.el.div(
                     rx.el.h2(
