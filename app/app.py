@@ -73,6 +73,17 @@ def index() -> rx.Component:
                     class_name="flex flex-col items-center text-center mb-8 px-4",
                 ),
                 rx.el.div(
+                    rx.image(
+                        src="/EEGHAT.png",
+                        class_name="h-72 w-auto hidden lg:block opacity-50 hover:opacity-100 transition-opacity duration-500",
+                    ),
+                    rx.image(
+                        src="/EEGHAT.png",
+                        class_name="h-72 w-auto hidden lg:block opacity-50 hover:opacity-100 transition-opacity duration-500 scale-x-[-1]",
+                    ),
+                    class_name="w-full flex justify-between items-center px-8 mb-16",
+                ),
+                rx.el.div(
                     rx.el.h2(
                         "The Future of Trading Mastery",
                         class_name="text-sm font-black text-[#556B2F] tracking-[0.3em] uppercase mb-8",
