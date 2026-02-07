@@ -8,7 +8,7 @@ from app.states.game_state import GameState
 
 def feature_card(icon: str, title: str, description: str) -> rx.Component:
     return rx.el.div(
-        rx.icon(icon, class_name="w-8 h-8 text-[#556B2F] mb-4"),
+        rx.icon(icon, class_name="w-8 h-8 text-[#556B3F] mb-4"),
         rx.el.h3(title, class_name="text-lg font-bold text-white mb-2"),
         rx.el.p(description, class_name="text-slate-400 text-sm"),
         class_name="bg-slate-900/50 p-6 rounded-2xl border border-slate-800/50 flex flex-col items-center text-center group hover:border-[#556B2F]/30 transition-all duration-300",
