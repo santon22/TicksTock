@@ -224,7 +224,7 @@ def index() -> rx.Component:
                         class_name="flex flex-wrap justify-center items-center gap-12 mb-16",
                     ),
                     rx.el.p(
-                        "© 2025 Rusticktrading/HypnoTicks • Mastering the mind for better trading",
+                        "© 2026 Rusticktrading/HypnoTicks • Mastering the mind for better trading",
                         class_name="text-slate-600 text-sm font-medium",
                     ),
                     class_name="w-full flex flex-col items-center pt-16 border-t border-slate-800/50",
