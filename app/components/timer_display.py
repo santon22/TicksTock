@@ -82,7 +82,9 @@ def timer_display() -> rx.Component:
                                     rx.cond(
                                         GameState.combo_multiplier > 1,
                                         rx.el.span(
-                                            f" (x{GameState.combo_multiplier})",
+                                            " (x",
+                                            GameState.combo_multiplier.to(str),
+                                            ")",
                                             class_name="text-amber-500 text-sm font-bold ml-1 animate-pulse",
                                         ),
                                     ),
@@ -135,7 +137,8 @@ def timer_display() -> rx.Component:
                             ),
                         ),
                         rx.el.p(
-                            f"Target was {GameState.formatted_target}",
+                            rx.el.span("Target was "),
+                            rx.el.span(GameState.formatted_target),
                             class_name="text-slate-500 text-sm mt-1",
                         ),
                         class_name="flex flex-col items-center",

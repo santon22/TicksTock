@@ -48,11 +48,12 @@ def controls() -> rx.Component:
                 ),
                 rx.el.div(
                     rx.el.span(
-                        GameState.current_level_idx + 1,
+                        (GameState.current_level_idx + 1).to(str),
                         class_name="text-2xl font-bold text-white",
                     ),
                     rx.el.span(
-                        f" / {GameState.total_levels}",
+                        " / ",
+                        GameState.total_levels.to(str),
                         class_name="text-lg font-medium text-slate-500 ml-1",
                     ),
                     class_name="flex items-baseline justify-center",

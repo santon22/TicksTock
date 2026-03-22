@@ -6,12 +6,13 @@ def history_item(attempt: Attempt) -> rx.Component:
     return rx.el.div(
         rx.el.div(
             rx.el.span(
-                f"Lvl {attempt['level']}",
+                "Lvl ",
+                attempt["level"].to(str),
                 class_name="text-slate-500 text-xs font-bold w-12",
             ),
             rx.el.div(
                 rx.el.span(
-                    f"{attempt['error_pct']:.1f}%",
+                    attempt["error_pct"].to(str) + "%",
                     class_name=rx.cond(
                         attempt["success"],
                         "text-emerald-400 font-bold",
@@ -24,12 +25,13 @@ def history_item(attempt: Attempt) -> rx.Component:
         ),
         rx.el.div(
             rx.el.span(
-                f"{attempt['elapsed']:.2f}s",
+                attempt["elapsed"].to(str) + "s",
                 class_name="text-slate-300 font-mono text-sm",
             ),
             rx.el.span("/", class_name="text-slate-600 mx-1 text-xs"),
             rx.el.span(
-                f"{attempt['target']}s", class_name="text-slate-500 font-mono text-xs"
+                attempt["target"].to(str) + "s",
+                class_name="text-slate-500 font-mono text-xs",
             ),
             class_name="flex items-center ml-auto",
         ),

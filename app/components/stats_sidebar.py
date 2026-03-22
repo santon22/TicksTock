@@ -4,14 +4,31 @@ from app.components.history_list import history_list
 
 
 def stat_card(
-    label: str, value: str, subtext: str = None, color: str = "text-white"
+    label: str,
+    value: rx.Var | str,
+    subtext: rx.Var | str | None = None,
+    color: rx.Var | str = "text-white",
 ) -> rx.Component:
     return rx.el.div(
         rx.el.p(
             label,
             class_name="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1",
         ),
-        rx.el.p(value, class_name=f"text-2xl font-black {color} tracking-tight"),
+        rx.el.p(
+            value,
+            class_name=rx.match(
+                color,
+                ("text-[#556B2F]", "text-2xl font-black text-[#556B2F] tracking-tight"),
+                ("text-amber-400", "text-2xl font-black text-amber-400 tracking-tight"),
+                (
+                    "text-emerald-400",
+                    "text-2xl font-black text-emerald-400 tracking-tight",
+                ),
+                ("text-rose-400", "text-2xl font-black text-rose-400 tracking-tight"),
+                ("text-slate-200", "text-2xl font-black text-slate-200 tracking-tight"),
+                "text-2xl font-black text-white tracking-tight",
+            ),
+        ),
         rx.cond(
             subtext,
             rx.el.p(subtext, class_name="text-slate-600 text-xs font-medium mt-1"),
@@ -22,7 +39,17 @@ def stat_card(
 
 def badge_item(badge: Badge) -> rx.Component:
     return rx.el.div(
-        rx.icon(badge["icon"], class_name=f"w-5 h-5 {badge['color']} mb-1"),
+        rx.icon(
+            badge["icon"],
+            class_name=rx.match(
+                badge["color"],
+                ("text-emerald-400", "w-5 h-5 text-emerald-400 mb-1"),
+                ("text-blue-400", "w-5 h-5 text-blue-400 mb-1"),
+                ("text-indigo-400", "w-5 h-5 text-indigo-400 mb-1"),
+                ("text-amber-400", "w-5 h-5 text-amber-400 mb-1"),
+                "w-5 h-5 text-slate-400 mb-1",
+            ),
+        ),
         rx.el.p(
             badge["name"],
             class_name="text-[10px] font-bold text-slate-300 text-center leading-tight",
@@ -45,9 +72,11 @@ def progress_bar() -> rx.Component:
             rx.el.div(
                 rx.el.span(
                     rx.el.span(
-                        GameState.max_unlocked_idx + 1, class_name="text-[#556B2F]"
+                        (GameState.max_unlocked_idx + 1).to(str),
+                        class_name="text-[#556B2F]",
                     ),
-                    f" / {GameState.total_levels}",
+                    " / ",
+                    GameState.total_levels.to(str),
                     class_name="text-slate-600",
                 ),
                 class_name="text-xs font-bold",
@@ -79,14 +108,14 @@ def stats_sidebar() -> rx.Component:
             stat_card("Attempts", GameState.total_attempts_count.to_string()),
             stat_card(
                 "Success Rate",
-                f"{GameState.formatted_success_rate}%",
+                GameState.formatted_success_rate + "%",
                 color=rx.cond(
                     GameState.success_rate >= 50, "text-emerald-400", "text-slate-200"
                 ),
             ),
             stat_card(
                 "Avg Error",
-                f"{GameState.formatted_avg_error}%",
+                GameState.formatted_avg_error + "%",
                 color=rx.cond(
                     GameState.avg_error <= 10, "text-emerald-400", "text-rose-400"
                 ),
@@ -94,7 +123,11 @@ def stats_sidebar() -> rx.Component:
             stat_card(
                 "Best Streak",
                 GameState.best_streak.to_string(),
-                subtext=f"Current: {GameState.current_streak} (x{GameState.combo_multiplier})",
+                subtext="Current: "
+                + GameState.current_streak.to(str)
+                + " (x"
+                + GameState.combo_multiplier.to(str)
+                + ")",
                 color="text-amber-400",
             ),
             class_name="grid grid-cols-2 gap-3 w-full mb-6",
@@ -121,10 +154,30 @@ def stats_sidebar() -> rx.Component:
             rx.el.div(
                 rx.el.span(
                     GameState.difficulty,
-                    class_name=f"px-4 py-1.5 rounded-full text-sm font-bold {GameState.difficulty_badge_classes} transition-colors duration-300",
+                    class_name=rx.match(
+                        GameState.difficulty,
+                        (
+                            "Easy",
+                            "px-4 py-1.5 rounded-full text-sm font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_15px_-3px_rgba(52,211,153,0.3)] transition-colors duration-300",
+                        ),
+                        (
+                            "Medium",
+                            "px-4 py-1.5 rounded-full text-sm font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20 shadow-[0_0_15px_-3px_rgba(96,165,250,0.3)] transition-colors duration-300",
+                        ),
+                        (
+                            "Hard",
+                            "px-4 py-1.5 rounded-full text-sm font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_15px_-3px_rgba(251,191,36,0.3)] transition-colors duration-300",
+                        ),
+                        (
+                            "Expert",
+                            "px-4 py-1.5 rounded-full text-sm font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20 shadow-[0_0_15px_-3px_rgba(251,113,133,0.3)] transition-colors duration-300",
+                        ),
+                        "px-4 py-1.5 rounded-full text-sm font-bold bg-slate-800 text-slate-400 transition-colors duration-300",
+                    ),
                 ),
                 rx.el.span(
-                    f"Target: {GameState.formatted_target}",
+                    rx.el.span("Target: "),
+                    rx.el.span(GameState.formatted_target),
                     class_name="text-slate-400 text-sm ml-auto font-mono",
                 ),
                 class_name="flex items-center bg-slate-900/50 rounded-xl p-4 border border-slate-800/50",
